@@ -1,10 +1,10 @@
 const { MessageFlags, TextDisplayBuilder, ThumbnailBuilder, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, ContainerBuilder, WebhookClient } = require('discord.js')
-const MAX_MESSAGE_LENGTH = 72
+const MAX_MESSAGE_LENGTH = 175
 
 module.exports.send = (id, token, repo, url, commits, size, pusher) =>
   new Promise((resolve, reject) => {
     let client
-    const username = 'Github Commits'
+    const username = 'Github Commits ' + repo
     console.log('Preparing Webhook...')
     try {
       client = new WebhookClient({
