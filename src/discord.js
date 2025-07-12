@@ -14,6 +14,7 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
       client
         .send({
           username: username,
+          content: ' ', // Add minimal content to avoid empty message error
           flags: MessageFlags.IsComponentsV2,
           components: createEmbed(url, commits, size, pusher),
         })
@@ -33,9 +34,9 @@ function createEmbed(url, commits, size, pusher) {
   console.log('Constructing Embed...')
   console.log('Commits :')
   console.log(commits)
-  if (!commits) {
+  if (!commits || commits.length === 0) {
     console.log('No commits, skipping...')
-    return
+    return []
   }
   const latest = commits[0]
   const components = [
