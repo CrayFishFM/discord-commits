@@ -1,4 +1,4 @@
-const { WebhookClient, EmbedBuilder } = require('discord.js')
+const { MessageFlags, TextDisplayBuilder, ThumbnailBuilder, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, ContainerBuilder, WebhookClient } = require('discord.js')
 const MAX_MESSAGE_LENGTH = 72
 
 module.exports.send = (id, token, repo, url, commits, size, pusher) =>
@@ -14,7 +14,8 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
       client
         .send({
           username: username,
-          embeds: createEmbed(url, commits, size, pusher),
+          flags: MessageFlags.IsComponentsV2,
+          components: createEmbed(url, commits, size, pusher),
         })
         .then(() => {
           console.log('Successfully sent the message! ')
