@@ -24,10 +24,10 @@
   "homepage": "https://github.com/ChatDisabled/discord-commits#readme",
   "dependencies": {
     "@actions/core": "^1.2.3",
-    "@actions/github": "^2.1.1",
-    "@discordjs/util": "^1.0.2",
-    "@discordjs/rest": "^2.0.0",
+    "@actions/github": "^6.0.1",
     "@discordjs/builders": "^1.7.0",
+    "@discordjs/rest": "^2.0.0",
+    "@discordjs/util": "^1.0.2",
     "discord.js": "^14.21.0"
   }
 }
