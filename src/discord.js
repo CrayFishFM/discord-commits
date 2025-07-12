@@ -14,6 +14,7 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
       client
         .send({
           username: username,
+          avatarURL: `https://github.com/${pusher}.png?size=64`,
           withComponents: true,
           flags: MessageFlags.IsComponentsV2,
           components: createEmbed(url, commits, size, pusher),
@@ -50,7 +51,7 @@ function createEmbed(url, commits, size, pusher) {
                               .setDescription(`⚡ ${pusher} pushed ${size} commit${size === 1 ? '' : 's'}`)
                       )
                       .addTextDisplayComponents(
-                          new TextDisplayBuilder().setContent("# Changelog"),
+                          new TextDisplayBuilder().setContent("# Commits"),
                       ),
               )
               .addSeparatorComponents(
