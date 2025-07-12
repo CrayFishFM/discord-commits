@@ -23,6 +23,7 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
         }, reject)
     } catch (error) {
       console.log('Error creating Webhook')
+      console.log(error)
       reject(error.message)
       return
     }
