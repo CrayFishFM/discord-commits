@@ -4,7 +4,7 @@ const MAX_MESSAGE_LENGTH = 72
 module.exports.send = (id, token, repo, url, commits, size, pusher) =>
   new Promise((resolve, reject) => {
     let client
-    const username = repo.replace(/(discord)/gi, '******')
+    const username = 'Github Commits'
     console.log('Preparing Webhook...')
     try {
       client = new WebhookClient({
