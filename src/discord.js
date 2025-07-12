@@ -1,4 +1,4 @@
-const { MessageEmbed, WebhookClient } = require('discord.js')
+const { MessageFlags, TextDisplayBuilder, ThumbnailBuilder, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, ContainerBuilder, WebhookClient } = require('discord.js')
 const MAX_MESSAGE_LENGTH = 72
 
 module.exports.send = (id, token, repo, url, commits, size, pusher) =>
@@ -14,7 +14,8 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
       client
         .send({
           username: username,
-          embeds: [createEmbed(url, commits, size, pusher)],
+          flags: MessageFlags.IsComponentsV2,
+          components: createEmbed(url, commits, size, pusher),
         })
         .then(() => {
           console.log('Successfully sent the message!')
@@ -36,17 +37,36 @@ function createEmbed(url, commits, size, pusher) {
     return
   }
   const latest = commits[0]
-  return new MessageEmbed()
-    .setColor(0xf1e542)
-    .setAuthor({
-      name: `⚡ ${pusher} pushed ${size} commit${
-        size === 1 ? '' : 's'
-      }`,
-      iconURL: `https://github.com/${pusher}.png?size=64`,
-      url: url,
-    })
-    .setDescription(`${getChangeLog(commits, size)}`)
-    .setTimestamp(Date.parse(latest.timestamp))
+  const components = [
+          new ContainerBuilder()
+              .setAccentColor(821229)
+              .addSectionComponents(
+                  new SectionBuilder()
+                      .setThumbnailAccessory(
+                          new ThumbnailBuilder()
+                              .setURL(`https://github.com/${pusher}.png?size=64`)
+                              .setDescription(`⚡ ${pusher} pushed ${size} commit${size === 1 ? '' : 's'}`)
+                      )
+                      .addTextDisplayComponents(
+                          new TextDisplayBuilder().setContent("# Changelog"),
+                      ),
+              )
+              .addSeparatorComponents(
+                  new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small).setDivider(true),
+              )
+              .addTextDisplayComponents(
+                  new TextDisplayBuilder().setContent(`${getChangeLog(commits, size)}`),
+              )
+              .addSeparatorComponents(
+                  new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small).setDivider(true),
+              )
+              .addTextDisplayComponents(
+                new TextDisplayBuilder().setContent(Date.parse(latest.timestamp)),
+              ),
+  ];
+
+  return components;
+  
 }
 
 function getChangeLog(commits, size) {
