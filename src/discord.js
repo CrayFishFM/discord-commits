@@ -1,10 +1,20 @@
 const { MessageFlags, TextDisplayBuilder, ThumbnailBuilder, SectionBuilder, SeparatorBuilder, SeparatorSpacingSize, ContainerBuilder, WebhookClient } = require('discord.js')
 const MAX_MESSAGE_LENGTH = 175
 
+function sanitizeRepoName(repo) {
+  // Check if repo contains "discord" (case-insensitive)
+  if (repo.toLowerCase().includes('discord')) {
+    // Replace "discord" with "chat" (case-insensitive)
+    return repo.replace(/discord/gi, 'stripped')
+  }
+  return repo
+}
+
 module.exports.send = (id, token, repo, url, commits, size, pusher) =>
   new Promise((resolve, reject) => {
     let client
-    const username = 'Github Commits ' + repo
+    const sanitizedRepo = sanitizeRepoName(repo)
+    const username = 'Github Commits ' + sanitizedRepo
     console.log('Preparing Webhook...')
     try {
       client = new WebhookClient({
