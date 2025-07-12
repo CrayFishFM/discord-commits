@@ -14,7 +14,7 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
       client
         .send({
           username: username,
-          content: ' ', // Add minimal content to avoid empty message error
+          withComponents: true,
           flags: MessageFlags.IsComponentsV2,
           components: createEmbed(url, commits, size, pusher),
         })
