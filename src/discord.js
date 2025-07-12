@@ -18,7 +18,7 @@ module.exports.send = (id, token, repo, url, commits, size, pusher) =>
           components: createEmbed(url, commits, size, pusher),
         })
         .then(() => {
-          console.log('Successfully sent the message!')
+          console.log('Successfully sent the message! ')
           resolve()
         }, reject)
     } catch (error) {
