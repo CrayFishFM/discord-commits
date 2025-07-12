@@ -62,7 +62,7 @@ function createEmbed(url, commits, size, pusher) {
                   new SeparatorBuilder().setSpacing(SeparatorSpacingSize.Small).setDivider(true),
               )
               .addTextDisplayComponents(
-                new TextDisplayBuilder().setContent(Date.parse(latest.timestamp)),
+                new TextDisplayBuilder().setContent(new Date(latest.timestamp).toLocaleString()),
               ),
   ];
 
